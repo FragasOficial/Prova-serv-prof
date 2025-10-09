@@ -1,0 +1,145 @@
+/* ======= RESET ======= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Times New Roman", serif;
+}
+
+/* ======= BODY ======= */
+body {
+  background: url('background.png') center center / cover no-repeat fixed;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 15px;
+}
+
+/* ======= CONTAINER ======= */
+.container {
+  background: rgba(255, 255, 255, 0.95);
+  width: 100%;
+  max-width: 750px;
+  border-radius: 12px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+  padding: 40px 50px;
+  animation: fadeIn 0.6s ease-in-out;
+  border: 2px solid #0b3b91;
+}
+
+/* ======= TÍTULO ======= */
+.container h1 {
+  font-size: 1.8rem;
+  text-align: center;
+  color: #0b3b91;
+  margin-bottom: 25px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  border-bottom: 3px solid #0b3b91;
+  padding-bottom: 10px;
+}
+
+/* ======= FORM ======= */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #0b3b91;
+  font-size: 1rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px 12px;
+  border: 1px solid #a2b3d6;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #0b3b91;
+  box-shadow: 0 0 0 3px rgba(11, 59, 145, 0.15);
+}
+
+/* ======= BOTÕES ======= */
+button {
+  background: #0b3b91;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #072b68;
+  transform: scale(1.02);
+}
+
+/* ======= PREVIEW ======= */
+#previewContainer {
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(240, 245, 255, 0.9);
+  border: 1px solid #c7d4f1;
+  border-radius: 10px;
+}
+
+#previewContainer h2 {
+  text-align: center;
+  color: #0b3b91;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+#pdfPreview {
+  border: none;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ======= ANIMAÇÃO ======= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======= RESPONSIVIDADE ======= */
+@media (max-width: 600px) {
+  .container {
+    padding: 25px 20px;
+  }
+
+  .container h1 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}
