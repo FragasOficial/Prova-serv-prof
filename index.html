@@ -3,181 +3,100 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Declaração — Exercício Docente</title>
+  <title>Declarações - Escola Nair Cunha de Aguiar</title>
+  <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="background.png">
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0;font-family:"Times New Roman",Times,serif}
-    body{background:#f5f7fb;display:flex;justify-content:center;padding:28px}
-    .app{width:100%;max-width:820px;background:#fff;border-radius:10px;box-shadow:0 8px 30px rgba(8,38,95,0.12);border:2px solid #0b3b91;padding:22px;display:flex;flex-direction:column;gap:18px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:52px;height:52px;background:url('background.png') center/cover no-repeat;border-radius:6px;border:2px solid rgba(11,59,145,0.12)}
-    h1{font-size:1.05rem;color:#0b3b91;margin-left:6px}
-
-    form{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:end}
-    label{font-weight:700;color:#0b3b91;font-size:0.9rem}
-    input[type=text], input[type=date], select{padding:8px;border-radius:8px;border:1px solid #c8d6ef;font-size:0.95rem}
-    .full{grid-column:1 / -1}
-
-    .controls{display:flex;gap:8px}
-    button{border:none;border-radius:8px;padding:10px 12px;cursor:pointer;font-weight:700}
-    .primary{background:#0b3b91;color:#fff}
-    .secondary{background:#fff;color:#0b3b91;border:1px solid #0b3b91}
-
-    .preview{margin-top:6px}
-    iframe{width:100%;height:820px;border:1px solid #e6eefc;border-radius:8px;background:#fff}
-
-    @media(max-width:880px){form{grid-template-columns:1fr}.logo{width:40px;height:40px}}
-  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <div class="app">
-    <div style="display:flex;align-items:center;gap:8px">
-      <div class="logo"></div>
-      <h1>Declaração — Exercício Docente</h1>
-    </div>
+  <div class="container">
+    <h1>Gerador de Declarações</h1>
 
-    <form id="docenteForm">
-      <div class="full">
+    <form id="declarationForm">
+      <div class="form-group">
         <label for="teacherName">Nome do(a) professor(a)</label>
-        <input id="teacherName" type="text" placeholder="VALDIR AGUIAR FERNANDES" required>
+        <input id="teacherName" type="text" placeholder="Ex: Marcelo Henrique Fernandes Silva" required>
       </div>
 
-      <div>
-        <label for="sexo">Sexo</label>
-        <select id="sexo" required>
-          <option value="">Selecione</option>
-          <option value="Masculino">Masculino</option>
-          <option value="Feminino">Feminino</option>
-        </select>
-      </div>
-
-      <div>
-        <label for="vinculo">Vínculo</label>
-        <select id="vinculo" required>
-          <option value="">Selecione</option>
-          <option value="Efetivo">Efetivo</option>
-          <option value="Temporário">Temporário</option>
-          <option value="Contratado">Contratado</option>
-        </select>
-      </div>
-
-      <div>
-        <label for="period">Período</label>
-        <select id="period" required>
-          <option value="">Selecione</option>
-          <option value="Manhã">Manhã</option>
-          <option value="Tarde">Tarde</option>
-          <option value="Manhã e Tarde">Manhã e Tarde</option>
-        </select>
-      </div>
-
-      <div>
-        <label for="lessonDate">Data da aula</label>
-        <input id="lessonDate" type="date">
-      </div>
-
-      <div style="display:flex;align-items:center;gap:8px">
-        <input id="otherDateChk" type="checkbox">
-        <label for="otherDateChk">Dia trabalhado é diferente do dia atual? (marque para escolher outra data)</label>
-      </div>
-
-      <div class="full" style="display:flex;gap:8px;justify-content:flex-start;margin-top:6px">
-        <div style="flex:0 0 auto">
-          <button type="submit" class="primary">Gerar Declaração</button>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sexo">Sexo</label>
+          <select id="sexo" required>
+            <option value="">Selecione</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+          </select>
         </div>
-        <div style="flex:0 0 auto">
-          <button type="button" id="resetBtn" class="secondary">Limpar</button>
+
+        <div class="form-group">
+          <label for="vinculo">Vínculo</label>
+          <select id="vinculo" required>
+            <option value="">Selecione</option>
+            <option value="Efetivo">Efetivo</option>
+            <option value="Temporário">Temporário</option>
+            <option value="Contratado">Contratado</option>
+          </select>
         </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <input type="checkbox" id="cpfCheck">
+          <label for="cpfCheck">Incluir CPF na declaração</label>
+        </div>
+
+        <div class="form-group" id="cpfField" style="display:none;">
+          <label for="cpf">CPF</label>
+          <input type="text" id="cpf" placeholder="000.000.000-00">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="lessonDate">Data de referência</label>
+          <input id="lessonDate" type="date" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Escolha o modelo de declaração</label>
+        <div class="checkbox-row">
+          <label><input type="radio" name="modelo" value="ausencia" checked> Ausência Justificada</label>
+          <label><input type="radio" name="modelo" value="docente"> Exercício Docente</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="customText">Observações (opcional)</label>
+        <textarea id="customText" rows="4" placeholder="Ex: Ministrou aulas durante o horário correspondente..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="diretora">Nome da Diretora/Responsável</label>
+        <input id="diretora" type="text" placeholder="Ex: Voitilia Maria Costa" required>
+      </div>
+
+      <div class="form-group">
+        <label>Assinatura Digital (opcional)</label>
+        <canvas id="signaturePad" width="500" height="150"></canvas>
+        <button type="button" id="clearSignature" class="btn-secondary" style="margin-top:6px;">Limpar Assinatura</button>
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="btn-primary">Gerar Declaração</button>
+        <button type="reset" class="btn-secondary" id="resetBtn">Limpar</button>
       </div>
     </form>
 
-    <div class="preview">
-      <iframe id="pdfPreview" title="Pré-visualização do PDF"></iframe>
-      <div style="text-align:right;margin-top:8px">
-        <button id="downloadBtn" class="secondary" style="display:none">Baixar PDF</button>
+    <div id="previewContainer" style="display:none;">
+      <h2>Pré-visualização</h2>
+      <iframe id="pdfPreview"></iframe>
+      <div class="download-area">
+        <button id="downloadBtn" class="btn-secondary">Baixar PDF</button>
       </div>
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script>
-    const { jsPDF } = window.jspdf;
-
-    function todayISO(){
-      const d=new Date();
-      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    }
-
-    function formatDate(dateStr){
-      if(!dateStr) return '';
-      const d=new Date(dateStr+'T12:00:00');
-      const meses=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
-      return `${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
-    }
-
-    function loadImage(url){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=url;});}
-
-    const lessonDate=document.getElementById('lessonDate');
-    const otherDateChk=document.getElementById('otherDateChk');
-    lessonDate.value=todayISO();
-    lessonDate.disabled=true;
-    otherDateChk.addEventListener('change',()=>{
-      lessonDate.disabled=!otherDateChk.checked;
-      if(!otherDateChk.checked){lessonDate.value=todayISO();}
-    });
-
-    document.getElementById('docenteForm').addEventListener('submit',async e=>{
-      e.preventDefault();
-      const name=document.getElementById('teacherName').value.trim();
-      const sexo=document.getElementById('sexo').value.trim();
-      const period=document.getElementById('period').value.trim();
-      const vinculo=document.getElementById('vinculo').value.trim();
-      const dateValue=lessonDate.value;
-      if(!name||!sexo||!period||!vinculo||!dateValue){alert('Preencha todos os campos obrigatórios.');return;}
-
-      const doc=new jsPDF({unit:'mm',format:'a4'});
-      const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
-      try{const bg=await loadImage('background.png');doc.addImage(bg,'PNG',0,0,pw,ph);}catch{}
-
-      // Concordância de gênero e artigo
-      const artigo = (sexo === 'Masculino') ? 'o senhor' : 'a senhora';
-      const cargo = (sexo === 'Masculino') ? 'professor' : 'professora';
-      const vinculoTxt = vinculo.toLowerCase();
-      const periodoTxt = (period === 'Manhã e Tarde') ? 'nos períodos ' + period.toLowerCase() : 'no período ' + period.toLowerCase();
-
-      const corpo = `Declaramos, para os devidos fins, que ${artigo} ${name.toUpperCase()}, ${cargo} ${vinculoTxt} desta unidade de ensino, esteve lecionando nesta escola ${periodoTxt} do dia ${formatDate(dateValue)}.`;
-
-      doc.setFont('Times','Normal');
-      doc.setFontSize(12);
-      const margin=25,maxW=pw-margin*2;
-      let y=120;
-      const lines=doc.splitTextToSize(corpo,maxW);
-      doc.text(lines,margin,y,{align:'left'});
-
-      // Espaço de 3cm (30mm) abaixo do corpo
-      y+=lines.length*7+30;
-      doc.text('O referido é verdade e dou fé.',margin,y,{align:'left'});
-
-      // Data alinhada à direita logo abaixo
-      const hoje=formatDate(todayISO());
-      y+=10;
-      doc.text(`Oiticica, Frecheirinha/CE, ${hoje}.`,pw-margin,y,{align:'right'});
-
-      const blobUrl=doc.output('bloburl');
-      document.getElementById('pdfPreview').src=blobUrl;
-      const dl=document.getElementById('downloadBtn');
-      dl.style.display='inline-block';
-      dl.onclick=()=>doc.save(`Declaracao_${name.replace(/\s+/g,'_')}.pdf`);
-    });
-
-    document.getElementById('resetBtn').addEventListener('click',()=>{
-      document.getElementById('docenteForm').reset();
-      lessonDate.value=todayISO();
-      lessonDate.disabled=true;
-      otherDateChk.checked=false;
-      document.getElementById('pdfPreview').src='';
-      document.getElementById('downloadBtn').style.display='none';
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
